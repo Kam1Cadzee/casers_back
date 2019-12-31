@@ -1,0 +1,20 @@
+{
+  "name": "casers_back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Kam1Cadzee/casers_back.git",
+  "author": "Vadim Vereketa <kam1cadzee@gmail.com>",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "watch": "nodemon src/index.ts",
+    "debug": "node -r ts-node/register src/index.ts"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@types/express": "^4.17.2",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4"
+  }
+}
