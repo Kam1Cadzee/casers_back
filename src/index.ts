@@ -11,8 +11,14 @@ let connect = '';
 app.get('/', (req, res) => {
   res.send(process.env.RESPONSE || connect);
 });
-
-createConnection(config.DATABASE_URL)
+let connection: any = undefined;
+if(config.DATABASE_URL) {
+  connection = {
+    type: 'postgres',
+    url: config.DATABASE_URL
+  }
+}
+createConnection(connection)
   .then(() => {
     console.log('Connect to DB');
     connect = 'connect';
