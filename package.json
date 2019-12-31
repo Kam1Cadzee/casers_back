@@ -1,11 +1,14 @@
 {
   "name": "casers_back",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": "https://github.com/Kam1Cadzee/casers_back.git",
   "author": "Vadim Vereketa <kam1cadzee@gmail.com>",
+  "engines": {
+    "node": "12.x"
+  },
+  "main": "src/index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "node src/index.js",
     "watch": "nodemon src/index.ts",
     "debug": "node -r ts-node/register src/index.ts"
   },
