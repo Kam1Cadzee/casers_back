@@ -1,11 +1,12 @@
 const express = require('express');
 
 const app = express();
+const PORT = process.env.PORT || 5000
 
 app.get('/', (req, res) => {
   res.send('ok');
 });
 
-app.listen(3000, () => {
-  console.log('Start server, listing: localhost:3000')
+app.listen(PORT, () => {
+  console.log('Start server, listing: localhost:', PORT)
 })
