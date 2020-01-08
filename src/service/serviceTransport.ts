@@ -27,9 +27,9 @@ export class ServiceTransport {
     });
     if(transport) {
       transport.status = Status.COLLISION;
+      data.collisionId = transport.id;
       await this.repository.save(transport);
     }
-    data.collisionId = transport.id;
 
     await this.repository.createQueryBuilder()
       .insert()
