@@ -13,7 +13,7 @@ let connect = '';
 
 app.use(express.json());
 app.get('/', (req, res) => {
-  res.send(process.env.RESPONSE || connect);
+  res.send(connect);
 });
 app.use('/transports', transport);
 
@@ -21,7 +21,8 @@ let connection: any = undefined;
 if(config.DATABASE_URL) {
   connection = {
     type: 'postgres',
-    url: config.DATABASE_URL
+    url: config.DATABASE_URL,
+    entities: 'src/entity/**/*.t'
   }
 }
 createConnection(connection)
