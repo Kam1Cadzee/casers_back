@@ -2,15 +2,21 @@ import "reflect-metadata";
 import express from 'express';
 import {createConnection} from 'typeorm';
 import config from './config';
+import transport from './controller/transport';
+import exp = require('constants');
 
 const app = express();
+
 const PORT = process.env.PORT || 5000;
 
 let connect = '';
 
+app.use(express.json());
 app.get('/', (req, res) => {
   res.send(process.env.RESPONSE || connect);
 });
+app.use('/transports', transport);
+
 let connection: any = undefined;
 if(config.DATABASE_URL) {
   connection = {
