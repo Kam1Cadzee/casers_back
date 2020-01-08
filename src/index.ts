@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import express from 'express';
-import {createConnection} from 'typeorm';
+import {createConnection, getConnection} from 'typeorm';
 import config from './config';
 import transport from './controller/transport';
 import {Transport} from './entity/Transport';
@@ -22,13 +22,14 @@ if(config.DATABASE_URL) {
   connection = {
     type: 'postgres',
     url: config.DATABASE_URL,
-    entities: [Transport]
+    entities: [Transport],
+    synchronize: true
   }
 }
 createConnection(connection)
   .then(() => {
-    console.log('Connect to DB');
-    connect = 'connect';
+
+    console.log(getConnection().options);
 
     app.listen(PORT, () => {
       console.log('Start server, listing: localhost:', PORT)
