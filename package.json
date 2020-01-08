@@ -5,7 +5,7 @@
   "author": "Vadim Vereketa <kam1cadzee@gmail.com>",
   "main": "src/index.js",
   "scripts": {
-    "build": "cd client && npm run build",
+    "build": "cd client && npm install && npm run build",
     "start": "npm run build && ts-node src/index.ts",
     "watch": "nodemon src/index.ts",
     "debug": "node -r ts-node/register src/index.ts"
