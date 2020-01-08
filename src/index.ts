@@ -3,7 +3,7 @@ import express from 'express';
 import {createConnection} from 'typeorm';
 import config from './config';
 import transport from './controller/transport';
-import exp = require('constants');
+import {Transport} from './entity/Transport';
 
 const app = express();
 
@@ -22,7 +22,7 @@ if(config.DATABASE_URL) {
   connection = {
     type: 'postgres',
     url: config.DATABASE_URL,
-    entities: 'src/entity/**/*.t'
+    entities: [Transport]
   }
 }
 createConnection(connection)
