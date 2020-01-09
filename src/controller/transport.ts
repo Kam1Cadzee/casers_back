@@ -8,8 +8,10 @@ const service = new ServiceTransport();
 router.post('/', (async (req, res) => {
     try {
       const data = req.body;
-      await service.createTransport(data);
-      return res.sendStatus(200);
+      const id = await service.createTransport(data);
+      return res.send({
+        id
+      });
     }
     catch (e) {
       return res.send(e)
@@ -44,6 +46,16 @@ router.get('/:id', async (req, res) => {
   const id = req.params.id;
   try {
     res.send(await service.getTransport(id));
+  }
+  catch (e) {
+    res.send(e);
+  }
+});
+
+router.get('/dublicate/:id', async (req, res) => {
+  const id = req.params.id;
+  try {
+    res.send(await service.getTransportDublicate(id));
   }
   catch (e) {
     res.send(e);

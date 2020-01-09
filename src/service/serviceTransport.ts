@@ -1,4 +1,4 @@
-import {getRepository, In, Repository} from 'typeorm';
+import {getRepository, In, Not, Repository} from 'typeorm';
 import {Status, Transport} from '../entity/Transport';
 
 export class ServiceTransport {
@@ -31,11 +31,12 @@ export class ServiceTransport {
       await this.repository.save(transport);
     }
 
-    await this.repository.createQueryBuilder()
+    const res = await this.repository.createQueryBuilder()
       .insert()
       .into(Transport)
       .values(data)
       .execute();
+    return res.identifiers[0].id;
   };
 
   updateTransport = async (id: string, data: any) => {
@@ -46,8 +47,27 @@ export class ServiceTransport {
       .execute();
   };
 
+  solveTransport = async (data: Partial<Transport>) => {
+    const id = data.collisionId;
+    data.collisionId = null;
+    await this.repository.update(id, data);
+
+    await this.repository.delete(data.id);
+  };
+
+
   getTransport = async (id: string) => {
     const res = await this.repository.findOne(id);
+    return res;
+  };
+
+  getTransportDublicate = async (id: string) => {
+    const res = await this.repository.findOne({
+      where: {
+        collisionId: id
+      }
+    });
+    console.log(res);
     return res;
   };
 
@@ -55,8 +75,12 @@ export class ServiceTransport {
     const res = await this.repository.find({
       where: statuses.length > 0 ?{
         status: In(statuses),
-      } : {},
+        collisionId: null
+      } : {
+        collisionId:  null
+      },
     });
     return res;
   }
 }
+
