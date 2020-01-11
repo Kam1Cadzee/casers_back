@@ -32,13 +32,9 @@ router.put('/:id', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-  let status = req.query.status;
-  if(status) {
-    if(!Array.isArray(status)) {
-      status = [status];
-    }
-  }
-  const result = await service.getTransports(status);
+  let collision = req.query.collision;
+
+  const result = await service.getTransports(!collision);
   return res.send(result);
 });
 

@@ -22,10 +22,10 @@ creator.addAction('DELETE_TRANSPORT',
 
 const {setLoading, setError, setData, addTransport, deleteTransport} = creator.createActions();
 
-const getTransportsFetch = (status: Status[] = []) => async (dispatch: any) => {
+const getTransportsFetch = () => async (dispatch: any) => {
   dispatch(setLoading(true));
   try {
-    const res = await service.getTransports(status);
+    const res = await service.getTransports();
     dispatch(setData(res));
     return res;
   } catch (e) {
@@ -36,8 +36,7 @@ const getTransportsFetch = (status: Status[] = []) => async (dispatch: any) => {
 };
 
 const addTransportFetch = (data: any) => async (dispatch: any) => {
-  const res = await service.addTransport(data);
-  dispatch(addTransport({...data, id: res.id}));
+  await service.addTransport(data);
 };
 
 const deleteTransportFetch = (id: string) => async (dispatch: any) => {

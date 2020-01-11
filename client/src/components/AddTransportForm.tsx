@@ -19,17 +19,19 @@ length: 2
  */
 const AddTransportForm = (props: any) => {
   const dispatch = useDispatch();
-  const { getFieldDecorator } = props.form;
+  const { getFieldDecorator, resetFields } = props.form;
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    props.form.validateFields((err: any, values: any) => {
+    props.form.validateFields(async (err: any, values: any) => {
       if (!err) {
         values.status = "way";
         values.devices = values.devices
           .split(",")
           .map((item: any) => ({ number: item, damaged: false }));
-        console.log("Received values of form: ", values);
-        dispatch(addTransportFetch(values));
+        await dispatch(addTransportFetch(values));
+        dispatch(getTransportsFetch());
+        resetFields();
       }
     });
   };
@@ -42,27 +44,35 @@ const AddTransportForm = (props: any) => {
   return (
     <Form layout="inline" onSubmit={handleSubmit}>
       <Form.Item>
-        {getFieldDecorator("number_transport")(
-          <Input placeholder="number_transport" />
+        {getFieldDecorator("number_transport", {
+          rules: [{ required: true, message: "Це поле обов'язкове" }],
+        })(
+          <Input placeholder="Номер машини" />
         )}
       </Form.Item>
       <Form.Item>
-        {getFieldDecorator("number_trailer")(
-          <Input placeholder="number_trailer" />
+        {getFieldDecorator("number_trailer",{
+          rules: [{ required: true, message: "Це поле обов'язкове" }],
+        })(
+          <Input placeholder="Номер прицепа" />
         )}
       </Form.Item>
       <Form.Item>
-        {getFieldDecorator("driver")(<Input placeholder="driver" />)}
+        {getFieldDecorator("driver",{
+          rules: [{ required: true, message: "Це поле обов'язкове" }],
+        })(<Input placeholder="Водiй" />)}
       </Form.Item>
 
       <Form.Item>
         {getFieldDecorator("devices", {
-          initialValue: "123,234,345"
-        })(<Input placeholder="devices" />)}
+          initialValue: "123,234,345",
+          rules: [{ required: true, message: "Це поле обов'язкове" }],
+
+        })(<Input placeholder="ЗПУ" />)}
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Log in
+          Добавити
         </Button>
       </Form.Item>
       <Form.Item>

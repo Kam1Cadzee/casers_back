@@ -19,7 +19,7 @@ interface ITransport {
 const ViewData = (data: ITransport) => {
     return (
       <div>
-        <p><b>Date: </b>{data.createdDate}</p>
+        <p><b>Date: </b>{new Date(data.createdDate).toLocaleString()}</p>
         <p><b>Number transport: </b>{data.number_transport}</p>
         <p><b>Number trailer: </b>{data.number_trailer}</p>
         <p><b>Driver: </b>{data.driver}</p>
@@ -47,7 +47,7 @@ const ModalSolve = ({id, isOpen, onClose}: any) => {
 
   useEffect(() => {
     const getTransport = async () => {
-      const res = await service.getTransportDublicate(id);
+      const res = await service.getTransport(db.collisionId);
       setData(res);
     };
 
