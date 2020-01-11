@@ -27,14 +27,16 @@ export class ServiceTransport {
     });
 
 
+    if(transport && data.status === Status.WAY) {
+      data.collisionId = transport.collisionId;
+      return await this.updateTransport(transport.id, data);
+    }
+
     if(transport && transport.collisionId !== null) {
       this.updateTransport(transport.collisionId, data);
       return ;
     }
 
-    if(transport && data.status === Status.WAY) {
-      return await this.updateTransport(transport.id, data);
-    }
 
     const res = await this.repository.createQueryBuilder()
       .insert()
