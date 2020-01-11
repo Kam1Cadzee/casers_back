@@ -18,7 +18,7 @@ const DeleteRender = ({raw}: any) => {
       {isOpen && <ModalSolve id={raw.id} onClose={toggle} isOpen={isOpen}/>}
       <Button onClick={() => dispatch(deleteTransportFetch(raw.id))}>Delete</Button>
       {
-        raw.status === 'collision' && (
+        raw.collisionId !== null && (
           <Button onClick={toggle}>Conflict</Button>
         )
       }
@@ -28,42 +28,43 @@ const DeleteRender = ({raw}: any) => {
 
 const columns = [
   {
-    title: 'Id',
+    title: 'Iд',
     dataIndex: 'id',
     key: 'id',
   },
   {
-    title: 'Status',
+    title: 'Статус',
     dataIndex: 'status',
     key: 'status',
   },
   {
-    title: 'Created Date',
+    title: 'Дата',
     dataIndex: 'createdDate',
     key: 'createdDate',
+    render: (raw: string) => new Date(raw).toLocaleString()
   },
   {
-    title: 'number_transport',
+    title: 'Номер машини',
     dataIndex: 'number_transport',
     key: 'number_transport',
   },
   {
-    title: 'number_trailer',
+    title: 'Номер прицепа',
     dataIndex: 'number_trailer',
     key: 'number_trailer',
   },
   {
-    title: 'Driver',
+    title: 'Водiй',
     dataIndex: 'driver',
     key: 'driver',
   },
   {
-    title: 'Devices',
+    title: 'ЗПУ',
     dataIndex: 'devices',
     key: 'devices',
     render: (raw: any) => {
       return (
-        <div>
+        <div className='column_devices'>
           {
             raw && raw.map((item: any) => {
               return <p>{item.number} {item.damaged ? <Tag color="red">-</Tag> : <Tag color="green">+</Tag> }</p>
@@ -90,7 +91,9 @@ const TransportTable = () => {
   }, []);
 
   return (
-    <Table dataSource={data} columns={columns} />
+    <Table size={'small'} tableLayout={'fixed'} indentSize={10} dataSource={data} columns={columns} scroll={{
+      y: 800
+    }} />
   )
 };
 

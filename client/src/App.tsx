@@ -6,7 +6,6 @@ import AddTransportForm from './components/AddTransportForm';
 const App: React.FC = () => {
   return (
     <div className="App">
-     <p>Empty project</p>
      <AddTransportForm/>
       <TransportTable/>
     </div>

@@ -6,9 +6,9 @@ const instance = axios.create({
   baseURL: config.API
 });
 
-const getTransports = async (status: Status[] = []) => {
+const getTransports = async () => {
   try {
-    const res = await instance.get("/transports");
+    const res = await instance.get("/transports?collision=true");
     if (res.status === 200) {
       return res.data;
     }
@@ -17,9 +17,9 @@ const getTransports = async (status: Status[] = []) => {
   }
 };
 
-const getTransportDublicate = async (id: string) => {
+const getTransport = async (id: string) => {
   try {
-    const res = await instance.get("/transports/dublicate/" + id);
+    const res = await instance.get("/transports/" + id);
     console.log(res);
     if (res.status === 200) {
       return res.data;
@@ -58,6 +58,6 @@ export default {
   getTransports,
   addTransport,
   deleteTransport,
-  getTransportDublicate,
+  getTransport,
   deleteTransports
 };

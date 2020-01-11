@@ -1,4 +1,4 @@
-import {getRepository, In, Not, Repository} from 'typeorm';
+import {getRepository, IsNull, Repository} from 'typeorm';
 import {Status, Transport} from '../entity/Transport';
 
 export class ServiceTransport {
@@ -22,13 +22,18 @@ export class ServiceTransport {
     const transport = await this.repository.findOne({
       where: {
         number_transport: data.number_transport,
-        status: Status.WAY
+        status: Status.WAY,
       }
     });
-    if(transport) {
-      transport.status = Status.COLLISION;
-      data.collisionId = transport.id;
-      await this.repository.save(transport);
+
+
+    if(transport && transport.collisionId !== null) {
+      this.updateTransport(transport.collisionId, data);
+      return ;
+    }
+
+    if(transport && data.status === Status.WAY) {
+      return await this.updateTransport(transport.id, data);
     }
 
     const res = await this.repository.createQueryBuilder()
@@ -36,6 +41,14 @@ export class ServiceTransport {
       .into(Transport)
       .values(data)
       .execute();
+
+
+
+    if(transport) {
+      transport.collisionId = res.identifiers[0].id;
+      await this.repository.save(transport);
+    }
+
     return res.identifiers[0].id;
   };
 
@@ -71,13 +84,18 @@ export class ServiceTransport {
     return res;
   };
 
-  getTransports = async (statuses: Status[] = []) => {
+  getTransports = async (collision: boolean = false) => {
+    let where = {};
+
+    if(collision) {
+      where = {
+        collisionId: IsNull()
+      }
+    }
     const res = await this.repository.find({
-      where: statuses.length > 0 ?{
-        status: In(statuses),
-        collisionId: null
-      } : {
-        collisionId:  null
+      where: {
+        status: Status.WAY,
+        ...where
       },
     });
     return res;
