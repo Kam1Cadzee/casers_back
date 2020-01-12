@@ -1,25 +1,19 @@
-import React from "react";
-import { Button, Form, Input } from "antd";
-import { useDispatch } from "react-redux";
-import { addTransportFetch, getTransportsFetch } from "../redux-data/transport";
-import service from "../service";
+import React, {useState} from 'react';
+import {Button, Checkbox, Form, Input} from 'antd';
+import {useDispatch} from 'react-redux';
+import {addTransportFetch, getTransportsFetch} from '../redux-data/transport';
+import service from '../service';
+import {Status} from '../status';
 
-/*
-id: 12
-collisionId: "11"
-status: "collision"
-createdDate: "2020-01-09T12:54:53.089Z"
-number_transport: "AA0AA"
-number_trailer: "AA1AA"
-driver: "driver"
-devices: Array(2)
-0: {number: "123123", damaged: false}
-1: {number: "44123", damaged: false}
-length: 2
- */
+const options = [
+  { label: 'В дорозi', value: Status.WAY },
+  { label: 'Прибутті', value: Status.ARRIVED },
+];
+
 const AddTransportForm = (props: any) => {
   const dispatch = useDispatch();
   const { getFieldDecorator, resetFields } = props.form;
+  const [status, setStatus] = useState([Status.WAY, Status.ARRIVED]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -30,19 +24,26 @@ const AddTransportForm = (props: any) => {
           .split(",")
           .map((item: any) => ({ number: item, damaged: false }));
         await dispatch(addTransportFetch(values));
-        dispatch(getTransportsFetch());
+        dispatch(getTransportsFetch(status));
         resetFields();
       }
     });
   };
+  const onChange = (checkedValues: any) => {
+    setStatus(checkedValues);
+    dispatch(getTransportsFetch(checkedValues));
+  };
 
   const handelClear = async () => {
     await service.deleteTransports();
-    dispatch(getTransportsFetch());
+    dispatch(getTransportsFetch(status));
   };
 
   return (
     <Form layout="inline" onSubmit={handleSubmit}>
+      <Form.Item>
+      <Checkbox.Group options={options} defaultValue={status} onChange={onChange} />
+      </Form.Item>
       <Form.Item>
         {getFieldDecorator("number_transport", {
           rules: [{ required: true, message: "Це поле обов'язкове" }],

@@ -6,9 +6,13 @@ const instance = axios.create({
   baseURL: config.API
 });
 
-const getTransports = async () => {
+const getTransports = async (status: Status[]) => {
   try {
-    const res = await instance.get("/transports?collision=true");
+    const res = await instance.get("/transports?collision=true", {
+      params: {
+        status
+      }
+    });
     if (res.status === 200) {
       return res.data;
     }
