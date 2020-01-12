@@ -49,7 +49,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.get('/number/:number', async (req, res) => {
-  const number = req.params.name;
+  const number = req.params.number;
   try {
     res.send(await service.getTransportByNumber(number));
   }
