@@ -1,4 +1,4 @@
-import {getRepository, IsNull, Repository} from 'typeorm';
+import {getRepository, In, IsNull, Repository} from 'typeorm';
 import {Status, Transport} from '../entity/Transport';
 
 export class ServiceTransport {
@@ -86,7 +86,7 @@ export class ServiceTransport {
     return res;
   };
 
-  getTransports = async (collision: boolean = false) => {
+  getTransports = async (collision: boolean = false, status: Status[] = [Status.WAY, Status.ARRIVED]) => {
     let where = {};
 
     if(collision) {
@@ -96,7 +96,7 @@ export class ServiceTransport {
     }
     const res = await this.repository.find({
       where: {
-        status: Status.WAY,
+        status: In(status),
         ...where
       },
     });

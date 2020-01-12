@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {deleteTransportFetch, getTransportsFetch} from '../redux-data/transport';
-import {useSelector, useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {Button, Table, Tag} from 'antd';
 import ModalSolve from './ModalSolve';
+import {Status} from '../status';
 
 const DeleteRender = ({raw}: any) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,10 +17,10 @@ const DeleteRender = ({raw}: any) => {
   return (
     <div>
       {isOpen && <ModalSolve id={raw.id} onClose={toggle} isOpen={isOpen}/>}
-      <Button onClick={() => dispatch(deleteTransportFetch(raw.id))}>Delete</Button>
+      <Button onClick={() => dispatch(deleteTransportFetch(raw.id))}>Удалить</Button>
       {
         raw.collisionId !== null && (
-          <Button onClick={toggle}>Conflict</Button>
+          <Button onClick={toggle}>Кофлiкт</Button>
         )
       }
     </div>
@@ -31,11 +32,19 @@ const columns = [
     title: 'Iд',
     dataIndex: 'id',
     key: 'id',
+    width: 50
   },
   {
     title: 'Статус',
     dataIndex: 'status',
     key: 'status',
+    width: 100,
+    render: (raw: Status) => {
+      if(raw === Status.WAY) {
+        return <Tag color="lime">В дорозi</Tag>
+      }
+      return <Tag color="gold">Прибув</Tag>
+    }
   },
   {
     title: 'Дата',
@@ -67,7 +76,7 @@ const columns = [
         <div className='column_devices'>
           {
             raw && raw.map((item: any) => {
-              return <p>{item.number} {item.damaged ? <Tag color="red">-</Tag> : <Tag color="green">+</Tag> }</p>
+              return <p>{item.number} {item.damaged ? <Tag color="red">-</Tag> : <Tag color="#52c41a" >+</Tag> }</p>
             })
           }
         </div>
@@ -78,6 +87,7 @@ const columns = [
     title: '',
     dataIndex: 'delete',
     key: 'delete',
+    width: 100,
     render: (raw: any, item: any) => <DeleteRender raw={item} />
   }
 ];
@@ -87,7 +97,7 @@ const TransportTable = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTransportsFetch());
+    dispatch(getTransportsFetch([Status.WAY, Status.ARRIVED]));
   }, []);
 
   return (

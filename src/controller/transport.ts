@@ -34,7 +34,7 @@ router.put('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
   let collision = req.query.collision;
 
-  const result = await service.getTransports(!collision);
+  const result = await service.getTransports(!collision, req.query.status);
   return res.send(result);
 });
 

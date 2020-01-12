@@ -2,9 +2,8 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   height: 100vh;
-  padding: 0 40px;
+  padding: 40px;
 }
 .column_devices {
   display: flex;
@@ -12,7 +11,6 @@
 }
 .column_devices p {
   flex-grow: 1;
-  text-align: right;
 }
 .App-logo {
   height: 40vmin;
