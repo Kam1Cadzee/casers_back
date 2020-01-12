@@ -48,6 +48,16 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.get('/number/:number', async (req, res) => {
+  const number = req.params.name;
+  try {
+    res.send(await service.getTransportByNumber(number));
+  }
+  catch (e) {
+    res.send(e);
+  }
+});
+
 router.get('/dublicate/:id', async (req, res) => {
   const id = req.params.id;
   try {

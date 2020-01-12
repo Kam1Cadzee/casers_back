@@ -76,6 +76,16 @@ export class ServiceTransport {
     return res;
   };
 
+  getTransportByNumber = async (number: string) => {
+    const res = await this.repository.findOne({
+      where: {
+        number_transport: number,
+        status: Status.WAY
+      }
+    });
+    return res;
+  };
+
   getTransportDublicate = async (id: string) => {
     const res = await this.repository.findOne({
       where: {
