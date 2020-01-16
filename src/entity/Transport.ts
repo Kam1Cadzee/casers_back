@@ -1,4 +1,4 @@
-import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn} from 'typeorm';
+import {BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn} from 'typeorm';
 
 export enum Status {
   WAY = 'way',
@@ -28,7 +28,16 @@ export class Transport {
   @CreateDateColumn()
   createdDate: Date;
 
-  @Column()
+  @Column({
+    transformer: {
+      to(value: string): any {
+        return value.toUpperCase();
+      },
+      from(value: string): any {
+        return value.toUpperCase();
+      }
+    }
+  })
   number_transport: string;
 
   @Column()

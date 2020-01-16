@@ -80,8 +80,9 @@ export class ServiceTransport {
     try {
       const res = await this.repository.findOne({
         where: {
-          number_transport: number,
-          status: Status.WAY
+          number_transport: number.toUpperCase(),
+          status: Status.WAY,
+          collisionId: IsNull()
         }
       });
       return res;
