@@ -77,13 +77,18 @@ export class ServiceTransport {
   };
 
   getTransportByNumber = async (number: string) => {
-    const res = await this.repository.findOne({
-      where: {
-        number_transport: number,
-        status: Status.WAY
-      }
-    });
-    return res;
+    try {
+      const res = await this.repository.findOne({
+        where: {
+          number_transport: number,
+          status: Status.WAY
+        }
+      });
+      return res;
+    }
+    catch (e) {
+      return '';
+    }
   };
 
   getTransports = async (collision: boolean = false, status: Status[] = [Status.WAY, Status.ARRIVED]) => {
