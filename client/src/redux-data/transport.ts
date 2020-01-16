@@ -2,6 +2,7 @@ import {IBaseActions, IBaseState} from './base/baseTypes';
 import {CreatorReducer} from './base/base';
 import service from '../service';
 import {Status} from '../status';
+import {RootState} from './index';
 
 interface ITransportActions extends IBaseActions{
   addTransport: any;
@@ -44,8 +45,9 @@ const deleteTransportFetch = (id: string) => async (dispatch: any) => {
   dispatch(deleteTransport(id));
 };
 
-const getTransportById = (id: string) => (state: any) =>
+const getTransportById = (id: string) => (state: RootState) =>
   state.transport.data.find((item: any) => item.id === id)!;
+
 export {addTransportFetch, deleteTransportFetch, getTransportsFetch, getTransportById};
 
 export default creator.createReducerFetch({

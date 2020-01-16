@@ -1,4 +1,61 @@
 .con {
+    display: grid;
+    grid-template-columns: auto 135px auto 115px;
+    align-items: center;
+}
+.con p {
+    font-weight: 500;
+}
+
+.raw {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+}
+.raw p {
+    margin-bottom: 0;
+}
+
+.btn {
+    margin: 0 8px;
+}
+.card {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    margin-top: 16px !important;
+}
+
+.device {
+    display: grid;
+    grid-template-columns: auto 30px 30px 30px 30px;
+    grid-column-start: 3;
+    grid-column-end: 5;
+    justify-content: flex-end;
+    align-items: center;
+    grid-gap: 8px;
+}
+
+
+.col1 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.col2 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.col3 {
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+
+.col4 {
+    grid-column-start: 4;
+    grid-column-end: 5;
+}
+
+.col5 {
+    grid-column-start: 5;
+    grid-column-end: 6;
 }
