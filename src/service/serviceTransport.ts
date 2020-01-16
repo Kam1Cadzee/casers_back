@@ -65,9 +65,9 @@ export class ServiceTransport {
   solveTransport = async (data: Partial<Transport>) => {
     const id = data.collisionId;
     data.collisionId = null;
-    await this.repository.update(id, data);
+    await this.repository.update(data.id, data);
 
-    await this.repository.delete(data.id);
+    await this.repository.delete(id);
   };
 
 
@@ -83,16 +83,6 @@ export class ServiceTransport {
         status: Status.WAY
       }
     });
-    return res;
-  };
-
-  getTransportDublicate = async (id: string) => {
-    const res = await this.repository.findOne({
-      where: {
-        collisionId: id
-      }
-    });
-    console.log(res);
     return res;
   };
 

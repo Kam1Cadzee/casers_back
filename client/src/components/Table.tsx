@@ -7,16 +7,24 @@ import {Status} from '../status';
 
 const DeleteRender = ({raw}: any) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const toggle = () => {
     setIsOpen(open => !open);
   };
 
-  const dispatch = useDispatch();
+  const onCancel = () => {
+    setIsOpen(false);
+  };
+
+  const onOk = () => {
+    setIsOpen(false);
+    dispatch(getTransportsFetch([Status.ARRIVED, Status.WAY]));
+  };
 
   return (
     <div>
-      {isOpen && <ModalSolve id={raw.id} onClose={toggle} isOpen={isOpen}/>}
+      {isOpen && <ModalSolve id={raw.id} onCancel={onCancel} onOk={onOk} isOpen={isOpen}/>}
       <Button onClick={() => dispatch(deleteTransportFetch(raw.id))}>Удалить</Button>
       {
         raw.collisionId !== null && (

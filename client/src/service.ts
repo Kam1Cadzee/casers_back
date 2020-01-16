@@ -24,7 +24,6 @@ const getTransports = async (status: Status[]) => {
 const getTransport = async (id: string) => {
   try {
     const res = await instance.get("/transports/" + id);
-    console.log(res);
     if (res.status === 200) {
       return res.data;
     }
@@ -58,10 +57,19 @@ const deleteTransports = async () => {
   }
 };
 
+const solveTransports = async (data: any) => {
+  try {
+    const res = await instance.post("/transports/solve", data);
+  } catch (e) {
+    throw e;
+  }
+};
+
 export default {
   getTransports,
   addTransport,
   deleteTransport,
   getTransport,
-  deleteTransports
+  deleteTransports,
+  solveTransports
 };

@@ -37,6 +37,16 @@ export class Transport {
   @Column()
   driver: string;
 
-  @Column('simple-json')
+  @Column('simple-json', {
+    transformer: {
+      from(value: any): any {
+        return value;
+      },
+      to(value: IDevice[]): any {
+        value.forEach(item => item.number = item.number.toUpperCase());
+        return value;
+      }
+    }
+  })
   devices: IDevice[];
 }

@@ -58,16 +58,6 @@ router.get('/number/:number', async (req, res) => {
   }
 });
 
-router.get('/dublicate/:id', async (req, res) => {
-  const id = req.params.id;
-  try {
-    res.send(await service.getTransportDublicate(id));
-  }
-  catch (e) {
-    res.send(e);
-  }
-});
-
 router.delete('/', (async (req, res) => {
   await service.deleteAll();
   return res.sendStatus(202);
@@ -82,4 +72,14 @@ router.delete('/:id', async (req, res) => {
     res.send(e);
   }
 });
+
+router.post('/solve', async (req, res) => {
+  try {
+    res.send(await service.solveTransport(req.body))
+  }
+  catch (e) {
+    res.send(e);
+  }
+});
+
 export default router;
