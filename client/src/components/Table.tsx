@@ -25,7 +25,7 @@ const DeleteRender = ({raw}: any) => {
   return (
     <div>
       {isOpen && <ModalSolve id={raw.id} onCancel={onCancel} onOk={onOk} isOpen={isOpen}/>}
-      <Button onClick={() => dispatch(deleteTransportFetch(raw.id))}>Удалить</Button>
+      {(raw.status !== Status.ARRIVED && raw.collisionId === null) && <Button onClick={() => dispatch(deleteTransportFetch(raw.id))}>Удалить</Button>}
       {
         raw.collisionId !== null && (
           <Button onClick={toggle}>Кофлiкт</Button>
