@@ -129,6 +129,7 @@ const ModalSolve = ({id, isOpen, onCancel, onOk}: any) => {
   if (!data) return null;
   return (
     <Modal
+      width={660}
       title="Конфлiкт данних"
       visible={isOpen}
       onOk={handleOk}

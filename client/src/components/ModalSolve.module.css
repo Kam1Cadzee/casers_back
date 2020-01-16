@@ -1,6 +1,6 @@
 .con {
     display: grid;
-    grid-template-columns: auto 135px auto 115px;
+    grid-template-columns: auto 160px auto 160px;
     align-items: center;
 }
 .con p {
@@ -26,7 +26,7 @@
 
 .device {
     display: grid;
-    grid-template-columns: auto 30px 30px 30px 30px;
+    grid-template-columns: auto 20px 20px 30px 30px;
     grid-column-start: 3;
     grid-column-end: 5;
     justify-content: flex-end;
