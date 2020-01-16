@@ -1,5 +1,4 @@
 import express from 'express';
-import {getRepository} from 'typeorm';
 import {ServiceTransport} from '../service/serviceTransport';
 const router = express.Router();
 
